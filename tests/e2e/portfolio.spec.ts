@@ -23,6 +23,7 @@ test("portfolio screenshots and full offline round", async ({
   await expect(
     page.getByText("Bereit zum Üben ohne Internet", { exact: true }),
   ).toBeVisible();
+  await page.waitForTimeout(300);
   await capture(page, `${out}/room.png`);
   await page.getByRole("button", { name: "Spielen", exact: true }).click();
   await capture(page, `${out}/practice.png`);
