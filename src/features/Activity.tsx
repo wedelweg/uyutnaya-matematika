@@ -1,4 +1,3 @@
-import { plural } from "../content/numbers";
 import { FlowerPots } from "../components/FlowerPots";
 import { CafeOrder, CookieBoard } from "./Cafe";
 import { CAFE_CHAPTERS, cafeCount, finishedCafe } from "../domain/cafe";
@@ -61,13 +60,13 @@ export function Activity() {
         </button>
         <span>
           {active.mode === "quick"
-            ? "Примеры → подарок"
+            ? "Aufgaben → Geschenk"
             : active.kind === "diagnostic"
               ? S.diagnostic
               : isAssessment(active.kind)
                 ? S.checks
                 : active.game === "cafe"
-                  ? "Смена в уютном кафе"
+                  ? "Eine Runde im gemütlichen Café"
                   : S.today}
         </span>
       </div>
@@ -200,12 +199,12 @@ function LessonPlayer({ lesson: l }: { lesson: Lesson }) {
       <h1>{l.title}</h1>
       <p className="learning-step">
         {step === 0
-          ? "① Смотрим на группы"
+          ? "① Gleiche Gruppen ansehen"
           : step < 3
-            ? "② Разбираем удобный способ"
+            ? "② Einen Rechenweg finden"
             : step === 3
-              ? "③ Соединяем части"
-              : "④ Теперь потренируемся"}
+              ? "③ Die Teile verbinden"
+              : "④ Jetzt üben wir"}
       </p>
       <p className="lesson-approach">
         {step === 0
@@ -575,14 +574,14 @@ function TaskPlayer({ task }: { task: Task }) {
           {S.task} {session.cursor + 1} / {session.tasks.length}
         </span>
         <span className="pill">
-          {support ? "С подсказкой" : quick ? "✿ К подарку" : S.independent}
+          {support ? "Mit Tipp" : quick ? "✿ Zum Geschenk" : S.independent}
         </span>
       </div>
       <h1>
         {quick
-          ? "Сколько получится?"
+          ? "Wie viel ist das?"
           : cafe
-            ? "Поможем приготовить угощение"
+            ? "Helfen wir beim Vorbereiten"
             : title}
       </h1>
       {cafe && !quick && !previous && (
@@ -675,7 +674,7 @@ function TaskPlayer({ task }: { task: Task }) {
           )}
           {(task.format !== "array" || split) && (
             <div className="worked-example">
-              <strong>Удобный способ</strong>
+              <strong>Ein guter Rechenweg</strong>
               <p className="support-equation">{explanation(fact.a, fact.b)}</p>
             </div>
           )}
@@ -724,7 +723,7 @@ function TaskPlayer({ task }: { task: Task }) {
             <div
               className={`answer-mascot ${previous.correct ? "answer-happy" : "answer-sad"}`}
               role="img"
-              aria-label={`${state.profile.pet === "bunny" ? "Помпомпурин" : "Май Мелоди"} ${previous.correct ? "радуется" : "грустит и поддерживает тебя"}`}
+              aria-label={`${state.profile.pet === "bunny" ? "Pompompurin" : "My Melody"} ${previous.correct ? "freut sich" : "ist traurig und macht dir Mut"}`}
             >
               <Mascot pet={state.profile.pet} />
               <span aria-hidden="true">{previous.correct ? "♥" : "💧"}</span>
@@ -735,9 +734,9 @@ function TaskPlayer({ task }: { task: Task }) {
               ? S.assessmentRecorded
               : previous.correct
                 ? quick
-                  ? "Верно!"
+                  ? "Richtig!"
                   : cafe
-                    ? "Заказ готов!"
+                    ? "Bestellung fertig!"
                     : S.correct
                 : S.correction}
           </h2>
@@ -747,7 +746,7 @@ function TaskPlayer({ task }: { task: Task }) {
                 ? S.assessmentNote
                 : previous.correct
                   ? cafe
-                    ? "Спасибо за угощение! Следующий заказ уже ждёт."
+                    ? "Danke für die Leckerei! Die nächste Bestellung wartet schon."
                     : S.correctNote
                   : explanation(fact.a, fact.b)}
             </p>
@@ -786,16 +785,14 @@ export function Summary() {
     return (
       <section className="narrow quick-summary">
         <div className="panel center summary-panel">
-          <h1>Готово! ✿</h1>
+          <h1>Fertig! ✿</h1>
           <p>
-            {session.answered}{" "}
-            {plural(session.answered, "пример", "примера", "примеров")} ·{" "}
-            {session.correct} верно
+            {session.answered} Aufgaben · {session.correct} richtig
           </p>
         </div>
         <RewardChoice showRoom />
         <button className="primary full" onClick={() => navigate("home")}>
-          В мою комнату
+          In mein Zimmer
           <Icon name="arrow" />
         </button>
         <button
@@ -806,7 +803,7 @@ export function Summary() {
               navigate("activity");
           }}
         >
-          Ещё раунд
+          Noch eine Runde
         </button>
       </section>
     );
@@ -819,7 +816,7 @@ export function Summary() {
           {session?.kind === "diagnostic"
             ? S.summaryDiagnostic
             : session && finishedCafe(session)
-              ? "Уютная смена завершена!"
+              ? "Die gemütliche Café-Runde ist geschafft!"
               : S.summary}
         </h1>
         <p>
@@ -834,16 +831,17 @@ export function Summary() {
             </span>
             <h2>
               {cafeCount(state) % 3 === 0
-                ? "Пикник состоялся!"
-                : "Ещё одна страница истории"}
+                ? "Das Picknick ist gelungen!"
+                : "Ein weiteres Kapitel der Geschichte"}
             </h2>
             <p>
               {cafeCount(state) % 3 === 0
-                ? "Друзья собрались на пикник. В следующий раз начнём новую главу."
-                : `В следующий раз: ${CAFE_CHAPTERS[cafeCount(state) % 3].title.toLowerCase()}.`}
+                ? "Die Freunde haben zusammen gepicknickt. Nächstes Mal beginnt ein neues Kapitel."
+                : `Nächstes Mal: ${CAFE_CHAPTERS[cafeCount(state) % 3].title}.`}
             </p>
             <small>
-              Отметка за завершённую смену. Ошибаться и брать подсказки можно.
+              Ein Zeichen für eine geschaffte Runde. Fehler und Tipps sind
+              erlaubt.
             </small>
           </div>
         )}

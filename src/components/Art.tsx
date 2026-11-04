@@ -94,7 +94,7 @@ export function Mascot({
     <img
       className={`mascot ${className}`}
       src={pet === "bunny" ? pompompurin : myMelody}
-      alt={pet === "bunny" ? "Помпомпурин" : "Май Мелоди"}
+      alt={pet === "bunny" ? "Pompompurin" : "My Melody"}
       width={330}
       height={340}
       draggable={false}
@@ -263,7 +263,7 @@ export function Room({
     <div
       className={`room-art pet-${pet}`}
       role="img"
-      aria-label={`Уютная комната: солнечное окно, подушки и ${pet === "bunny" ? "Помпомпурин" : "Май Мелоди"}`}
+      aria-label={`Gemütliches Zimmer mit sonnigem Fenster, Kissen und ${pet === "bunny" ? "Pompompurin" : "My Melody"}`}
     >
       <svg viewBox="0 0 600 410" className="room-scene" aria-hidden="true">
         <defs>
@@ -397,7 +397,7 @@ export function Room({
           <Item key={id} id={id} className={`room-item item-position-${i}`} />
         ),
       )}
-      <span className="scene-caption">место для маленьких открытий</span>
+      <span className="scene-caption">Platz für kleine Entdeckungen</span>
     </div>
   );
 }

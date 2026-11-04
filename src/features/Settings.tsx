@@ -14,17 +14,17 @@ export function Settings() {
   return (
     <section className="panel narrow">
       <span className="eyebrow">{S.settings}</span>
-      <h1>Твои настройки</h1>
+      <h1>Deine Einstellungen</h1>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
           try {
-            new Intl.DateTimeFormat("ru", { timeZone: p.timezone }).format();
+            new Intl.DateTimeFormat("de", { timeZone: p.timezone }).format();
             if (await commit({ ...state, profile: p }))
               setMessage(S.profileSaved);
           } catch {
             setMessage(
-              "Проверьте название часового пояса, например Europe/Berlin.",
+              "Prüfe den Namen der Zeitzone, zum Beispiel Europe/Berlin.",
             );
           }
         }}
@@ -129,7 +129,7 @@ export function Backup() {
     setMessage("");
     if (!file) return;
     try {
-      if (file.size > MAX_BACKUP_BYTES) throw new Error("8 МБ");
+      if (file.size > MAX_BACKUP_BYTES) throw new Error("8 MB");
       setPreview(parseBackup(await file.text()));
     } catch {
       setMessage(S.importError);
@@ -160,9 +160,9 @@ export function Backup() {
         <div className="import-preview">
           <h3>{S.importPreview}</h3>
           <p>
-            {preview.profile.name || "Без имени"} · {preview.sessions.length}{" "}
-            занятий · {preview.attempts.length} {S.attempts} ·{" "}
-            {preview.rewards.length} украшений
+            {preview.profile.name || "Ohne Namen"} · {preview.sessions.length}{" "}
+            Übungen · {preview.attempts.length} {S.attempts} ·{" "}
+            {preview.rewards.length} Dekorationen
           </p>
           <p>{S.replaceNote}</p>
           <div className="button-row">
@@ -224,7 +224,7 @@ export function Install() {
   const [verified, setVerified] = useState<boolean | null>(null);
   return (
     <section className="panel narrow prose">
-      <span className="eyebrow">PWA · без App Store</span>
+      <span className="eyebrow">PWA · ohne App Store</span>
       <h1>{S.installTitle}</h1>
       <ol>
         {S.installSteps.map((s) => (
@@ -251,7 +251,7 @@ export function Install() {
         rel="noreferrer"
         target="_blank"
       >
-        Инструкция Apple
+        Apple-Anleitung
       </a>
     </section>
   );

@@ -44,9 +44,9 @@ export async function writeState(state: State, expectedRevision: number) {
 type Obj = Record<string, unknown>;
 function object(x: unknown): asserts x is Obj {
   if (!x || typeof x !== "object" || Array.isArray(x))
-    throw new Error("Некорректный объект");
+    throw new Error("Ungültiges Objekt");
 }
-function check(x: unknown, message = "Некорректные данные"): asserts x {
+function check(x: unknown, message = "Ungültige Daten"): asserts x {
   if (!x) throw new Error(message);
 }
 const str = (x: unknown, max = 200) => typeof x === "string" && x.length <= max;
@@ -88,7 +88,7 @@ export function migrate(input: unknown): unknown {
 }
 export function validateState(input: unknown): State {
   object(input);
-  check(input.schemaVersion === 2, "Неподдерживаемая версия");
+  check(input.schemaVersion === 2, "Nicht unterstützte Version");
   const {
     profile: p,
     facts,
@@ -109,7 +109,7 @@ export function validateState(input: unknown): State {
       bool(p.diagnosticDone) &&
       ["easy", "normal", "tired"].includes(String(p.mood)),
   );
-  new Intl.DateTimeFormat("ru", { timeZone: p.timezone as string }).format();
+  new Intl.DateTimeFormat("de", { timeZone: p.timezone as string }).format();
   object(facts);
   check(Object.keys(facts).length === 100);
   for (let a = 1; a <= 10; a++)
@@ -309,13 +309,13 @@ export function exportBackup(s: State, now = new Date()) {
 export function parseBackup(text: string) {
   check(
     new TextEncoder().encode(text).length <= MAX_BACKUP_BYTES,
-    "Файл больше 8 МБ",
+    "Datei ist größer als 8 MB",
   );
   const file: unknown = JSON.parse(text);
   object(file);
   check(
     file.format === "cozy-math" && [1, 2].includes(Number(file.version)),
-    "Это не резервная копия приложения",
+    "Das ist keine Sicherung dieser App",
   );
   return validateState(migrate(file.data));
 }

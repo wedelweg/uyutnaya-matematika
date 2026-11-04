@@ -52,7 +52,7 @@ describe("transactional persistence and backups", () => {
     (text) => expect(() => parseBackup(text)).toThrow(),
   );
   it("rejects an oversized input before parsing", () =>
-    expect(() => parseBackup(" ".repeat(8 * 1024 * 1024 + 1))).toThrow("8 МБ"));
+    expect(() => parseBackup(" ".repeat(8 * 1024 * 1024 + 1))).toThrow("8 MB"));
   it("validates ranges, enums, dates, unique IDs, and timezone", () => {
     const mutate = [
       (s: any) => (s.facts["7x8"].a = 99),

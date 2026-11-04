@@ -1,4 +1,4 @@
-import { cookies, plates, perCookies } from "../content/numbers";
+import { cookies, plates } from "../content/numbers";
 import { useState } from "react";
 import { useApp } from "../context";
 import {
@@ -16,14 +16,14 @@ export function CafeStory() {
     count = cafeCount(state),
     chapter = CAFE_CHAPTERS[count % 3];
   return (
-    <section className="cafe-story" aria-label="История кафе">
+    <section className="cafe-story" aria-label="Café-Geschichte">
       <div className="cafe-story-heading">
         <span className="cafe-sign" aria-hidden="true">
           {chapter.icon}
         </span>
         <div>
           <span className="eyebrow">
-            Кафе маленьких открытий · глава {Math.floor(count / 3) + 1}
+            Café der kleinen Entdeckungen · Kapitel {Math.floor(count / 3) + 1}
           </span>
           <h2>{chapter.title}</h2>
           <p>{chapter.note}</p>
@@ -40,14 +40,14 @@ export function CafeStory() {
             <span aria-hidden="true">{i < count % 3 ? "✓" : c.icon}</span>
             <span>
               {c.title}
-              {i === count % 3 && <small>Сегодня</small>}
+              {i === count % 3 && <small>Heute</small>}
             </span>
           </li>
         ))}
       </ol>
       <p className="cafe-story-note">
-        {count ? `Завершено смен: ${count}. ` : ""}История подождёт, если
-        захочется отдохнуть.
+        {count ? `Geschaffte Runden: ${count}. ` : ""}Die Geschichte wartet,
+        wenn du eine Pause brauchst.
       </p>
     </section>
   );
@@ -68,14 +68,16 @@ export function CafeOrder({
     <div className="cafe-order">
       <Mascot pet={state.profile.pet} />
       <div>
-        <span className="eyebrow">Заказ для друзей</span>
+        <span className="eyebrow">Bestellung für Freunde</span>
         <p>
           {missing
-            ? `Нужно разложить ${cookies(a * b)}, ${perCookies(b)} на тарелку. Сколько тарелок понадобится?`
-            : `Для гостей приготовлено: ${plates(a)}. На каждой — ${perCookies(b)}. Сколько печений приготовить?`}
+            ? `Du hast ${cookies(a * b)}. Auf jeden Teller kommen ${cookies(b)}. Wie viele Teller brauchst du?`
+            : `Für die Gäste stehen ${plates(a)} bereit. Auf jeden Teller kommen ${cookies(b)}. Wie viele Kekse brauchst du insgesamt?`}
         </p>
         {independent && (
-          <small>Попробуй вспомнить без тарелок. Подсказка всегда рядом.</small>
+          <small>
+            Versuche es zuerst ohne die Teller. Ein Tipp ist immer da.
+          </small>
         )}
       </div>
     </div>
@@ -96,14 +98,14 @@ export function CookieBoard({
 }) {
   const ready = Math.min(a, served);
   return (
-    <div className="cookie-board" aria-label="Раскладываем печенье по тарелкам">
+    <div className="cookie-board" aria-label="Kekse auf Teller verteilen">
       <div className="cookie-plates">
         {Array.from({ length: a }, (_, i) => (
           <div
             className={`cookie-plate ${i < ready ? "filled" : ""}`}
             key={i}
             role="img"
-            aria-label={`Тарелка ${i + 1}: ${cookies(i < ready ? b : 0)}`}
+            aria-label={`Teller ${i + 1}: ${cookies(i < ready ? b : 0)}`}
           >
             <span className="plate-number">{i + 1}</span>
             <span className="cookie-group">
@@ -118,7 +120,7 @@ export function CookieBoard({
         ))}
       </div>
       <p role="status">
-        {ready} из {a} тарелок · {cookies(ready * b)} на столе
+        {ready} von {a} Tellern · {cookies(ready * b)} auf dem Tisch
       </p>
       {ready < a ? (
         <button
@@ -126,14 +128,14 @@ export function CookieBoard({
           disabled={disabled}
           onClick={onServe}
         >
-          Положить по {b} на следующую тарелку
+          Lege {cookies(b)} auf den nächsten Teller
         </button>
       ) : (
         <p className="cafe-ready">
-          Все тарелки готовы: {a} × {b} = {a * b}
+          Alle Teller sind fertig: {a} × {b} = {a * b}
         </p>
       )}
-      <small>Каждая тарелка — одна равная группа.</small>
+      <small>Jeder Teller ist eine gleich große Gruppe.</small>
     </div>
   );
 }
@@ -147,21 +149,22 @@ export function RoomEditor() {
     if (await commit(placeItem(state, selected, position)))
       setMessage(
         position === null
-          ? "Украшение убрано в коллекцию."
-          : `${ITEM_NAMES[selected]}: ${ROOM_PLACES[position].toLowerCase()}. Сохранено.`,
+          ? "Die Dekoration ist wieder in der Sammlung."
+          : `${ITEM_NAMES[selected]}: ${ROOM_PLACES[position]}. Gespeichert.`,
       );
   }
   return (
-    <section className="panel room-editor" aria-label="Обустройство комнаты">
-      <span className="eyebrow">Твоя маленькая мастерская</span>
-      <h2>Обустроим комнату</h2>
+    <section className="panel room-editor" aria-label="Zimmer gestalten">
+      <span className="eyebrow">Deine kleine Werkstatt</span>
+      <h2>Gestalte dein Zimmer</h2>
       <p>
-        Выбери украшение, затем место. Можно переставлять сколько захочется.
+        Wähle eine Dekoration und dann einen Platz. Du kannst alles jederzeit
+        umstellen.
       </p>
       {state.rewards.length === 0 ? (
         <p className="notice">
-          Первое украшение появится после учебного шага. Оно останется с тобой,
-          даже если ошибаться или делать перерывы.
+          Die erste Dekoration bekommst du nach einem Lernschritt. Sie bleibt
+          bei dir, auch wenn du Fehler machst oder Pausen einlegst.
         </p>
       ) : (
         <>
@@ -180,17 +183,17 @@ export function RoomEditor() {
                 <Item id={id} />
                 <span>{ITEM_NAMES[id]}</span>
                 <small>
-                  {slots.includes(id) ? "В комнате" : "В коллекции"}
+                  {slots.includes(id) ? "Im Zimmer" : "In der Sammlung"}
                 </small>
               </button>
             ))}
           </div>
           {selected !== null && (
             <div className="placement-panel">
-              <h3>Куда поставить: {ITEM_NAMES[selected]}?</h3>
+              <h3>Wohin mit: {ITEM_NAMES[selected]}?</h3>
               <p>
-                Занятое место можно заменить. Если выбранный предмет уже в
-                комнате, украшения поменяются местами.
+                Ein besetzter Platz kann getauscht werden. Ist die gewählte
+                Dekoration schon im Zimmer, tauschen beide ihren Platz.
               </p>
               <div className="place-picker">
                 {ROOM_PLACES.map((name, i) => (
@@ -204,7 +207,7 @@ export function RoomEditor() {
                     <span>
                       {name}
                       <small>
-                        {slots[i] === null ? "Свободно" : ITEM_NAMES[slots[i]!]}
+                        {slots[i] === null ? "Frei" : ITEM_NAMES[slots[i]!]}
                       </small>
                     </span>
                     {slots[i] === selected && <Icon name="check" size={18} />}
@@ -216,7 +219,7 @@ export function RoomEditor() {
                 disabled={busy || !slots.includes(selected)}
                 onClick={() => void place(null)}
               >
-                Убрать в коллекцию
+                Zurück in die Sammlung
               </button>
             </div>
           )}

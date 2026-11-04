@@ -139,7 +139,7 @@ export default function App() {
         className={`app pet-${state.profile.pet} ${state.profile.theme} ${state.profile.motion ? "" : "no-motion"} ${screen === "activity" ? "in-activity" : ""}`}
       >
         <a className="skip-link" href="#main-content">
-          К содержимому
+          Zum Inhalt
         </a>
         <header className="header">
           <button
@@ -158,7 +158,7 @@ export default function App() {
             </span>
           </button>
           {state.profile.onboarded && (
-            <nav className="desktop-nav" aria-label="Главное меню">
+            <nav className="desktop-nav" aria-label="Hauptmenü">
               {nav.map(([id, label, icon]) => (
                 <button
                   key={id}
@@ -214,14 +214,14 @@ export default function App() {
           {screens[screen]}
         </main>
         <footer className="footer">
-          <span>Уютная математика</span>
+          <span>Gemütliche Mathe</span>
           <span className="dad-dedication">
-            Учимся маленькими шагами. <span aria-hidden="true">♥</span>
+            Wir lernen in kleinen Schritten. <span aria-hidden="true">♥</span>
           </span>
           <Icon name="flower" size={17} />
         </footer>
         {state.profile.onboarded && screen !== "activity" && (
-          <nav className="mobile-nav" aria-label="Главное меню">
+          <nav className="mobile-nav" aria-label="Hauptmenü">
             {nav.map(([id, label, icon]) => (
               <button
                 key={id}
