@@ -74,7 +74,7 @@ export function Home() {
               className="text-button"
               onClick={() => setShowCollection(!showCollection)}
             >
-              Обустройство · {state.rewards.length}/16{" "}
+              Dekoration · {state.rewards.length}/16{" "}
               <span aria-hidden="true">↗</span>
             </button>
           </div>
@@ -92,8 +92,8 @@ export function Home() {
             <Icon name="leaf" size={16} />
             {S.today}
           </span>
-          <h2>Новый раунд</h2>
-          <p>Реши примеры — выбери украшение.</p>
+          <h2>Neue Runde</h2>
+          <p>Löse Aufgaben und wähle eine Dekoration.</p>
           <fieldset className="mood-picker" disabled={busy || !!state.active}>
             <legend>{S.mood}</legend>
             <div>
@@ -140,8 +140,8 @@ export function Home() {
             <Icon name="book" size={29} />
           </span>
           <span>
-            <strong>Хочу поучиться</strong>
-            <small>Картинки и способы счёта</small>
+            <strong>Ich möchte lernen</strong>
+            <small>Bilder und Rechenwege</small>
           </span>
           <Icon name="arrow" />
         </button>
@@ -152,7 +152,7 @@ export function Home() {
           <span>
             <small>{S.map}</small>
             <strong>
-              {secure} из 100 — {S.secure.toLowerCase()}
+              {secure} von 100 · {S.secure.toLowerCase()}
             </strong>
           </span>
           <Icon name="arrow" />
@@ -194,7 +194,7 @@ export function RewardChoice({ showRoom = false }: { showRoom?: boolean }) {
       )}
       {chosen !== null && (
         <p className="gift-arrived" role="status">
-          {ITEM_NAMES[chosen]} теперь в твоей комнате! ♥
+          {ITEM_NAMES[chosen]} ist jetzt in deinem Zimmer! ♥
         </p>
       )}
       {state.pendingRewards.length > 0 ? (
@@ -220,8 +220,8 @@ export function RewardChoice({ showRoom = false }: { showRoom?: boolean }) {
         chosen === null && (
           <p>
             {state.rewards.length === 16
-              ? "Все 16 украшений собраны! Можно переставить их в комнате."
-              : "Твоя комната становится уютнее."}
+              ? "Alle 16 Dekorationen sind da! Du kannst sie im Zimmer umstellen."
+              : "Dein Zimmer wird immer gemütlicher."}
           </p>
         )
       )}
@@ -294,8 +294,8 @@ export function Intro() {
   return (
     <section className="panel narrow center">
       <Mascot pet={state.profile.pet} className="intro-mascot" />
-      <h1>Поиграем?</h1>
-      <p>6 примеров — и подарок для комнаты.</p>
+      <h1>Spielen wir?</h1>
+      <p>6 Aufgaben und ein Geschenk fürs Zimmer.</p>
       <button
         className="primary full"
         disabled={busy}
@@ -304,11 +304,11 @@ export function Intro() {
             navigate("activity");
         }}
       >
-        Играть
+        Spielen
         <Icon name="arrow" />
       </button>
       <button className="secondary full" onClick={() => navigate("workshop")}>
-        Хочу поучиться
+        Ich möchte lernen
       </button>
       <button
         className="text-button full"

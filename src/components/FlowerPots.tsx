@@ -3,7 +3,7 @@ export function FlowerPots({ a, b }: { a: number; b: number }) {
   return (
     <figure
       className="flower-garden"
-      aria-label={`${pots(a)}. В каждом ${perFlowers(b)}.`}
+      aria-label={`${pots(a)}. In jedem ${b === 1 ? "wächst" : "wachsen"} ${perFlowers(b)}.`}
     >
       <div className="flower-pots">
         {Array.from({ length: a }, (_, i) => (
@@ -11,7 +11,7 @@ export function FlowerPots({ a, b }: { a: number; b: number }) {
             className="flower-pot-group"
             key={i}
             role="img"
-            aria-label={`Горшочек ${i + 1}: ${flowers(b)}`}
+            aria-label={`Blumentopf ${i + 1}: ${flowers(b)}`}
           >
             <div className="flower-stems">
               {Array.from({ length: b }, (_, j) => (
@@ -45,7 +45,7 @@ export function FlowerPots({ a, b }: { a: number; b: number }) {
         ))}
       </div>
       <figcaption>
-        Один горшочек — одна группа. Посчитай цветы в каждой.
+        Ein Blumentopf ist eine Gruppe. Zähle die Blumen in jedem Topf.
       </figcaption>
     </figure>
   );

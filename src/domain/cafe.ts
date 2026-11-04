@@ -1,28 +1,28 @@
 import type { Session, State } from "./types";
 export const ROOM_PLACES = [
-  "На диване",
-  "У окна",
-  "На полке",
-  "На подушке",
-  "У коврика",
-  "На стене",
-  "В уютном уголке",
-  "Возле растения",
+  "Auf dem Sofa",
+  "Am Fenster",
+  "Im Regal",
+  "Auf dem Kissen",
+  "Beim Teppich",
+  "An der Wand",
+  "In der Kuschelecke",
+  "Neben der Pflanze",
 ];
 export const CAFE_CHAPTERS = [
   {
-    title: "Открываем кафе",
-    note: "Приготовим печенье для первых гостей.",
+    title: "Wir eröffnen das Café",
+    note: "Backen wir Kekse für die ersten Gäste.",
     icon: "☕",
   },
   {
-    title: "Чаепитие с друзьями",
-    note: "Накроем стол и потренируем знакомые заказы.",
+    title: "Tee mit Freunden",
+    note: "Decken wir den Tisch und üben bekannte Bestellungen.",
     icon: "✿",
   },
   {
-    title: "Пикник в саду",
-    note: "Соберём угощения для маленького праздника.",
+    title: "Picknick im Garten",
+    note: "Packen wir Leckereien für ein kleines Fest ein.",
     icon: "☀",
   },
 ];

@@ -1,5 +1,6 @@
 import { pots, perFlowers } from "./numbers";
-export const S = {
+import { GERMAN_ITEM_NAMES, GERMAN_STRINGS } from "./de";
+export const RUSSIAN_STRINGS = {
   brand: "Уютная математика",
   brandNote: "маленькие шаги, большие открытия",
   home: "Моя комната",
@@ -214,6 +215,7 @@ export const S = {
   updateAction: "Обновить приложение",
   updateNote: "Прогресс сохранится. Обновление запускается между занятиями.",
 };
+export const S: typeof RUSSIAN_STRINGS = GERMAN_STRINGS;
 export const STATUS_LABEL = {
   unseen: S.unseen,
   learning: S.learning,
@@ -228,7 +230,7 @@ export const STATUS_SYMBOL = {
   secure: "✓",
   needsReview: "↻",
 };
-export const ITEM_NAMES = [
+export const RUSSIAN_ITEM_NAMES = [
   "Подушка-сердце",
   "Цветок в горшке",
   "Лампа-звезда",
@@ -246,11 +248,14 @@ export const ITEM_NAMES = [
   "Звёздная наклейка",
   "Корзинка для мелочей",
 ];
+export const ITEM_NAMES = GERMAN_ITEM_NAMES;
 export const wordProblem = (a: number, b: number) =>
-  `На подоконнике ${pots(a)}. В каждом ${perFlowers(b)}. Сколько цветков всего?`;
+  `Auf der Fensterbank ${a === 1 ? "steht" : "stehen"} ${pots(a)}. In jedem ${b === 1 ? "wächst" : "wachsen"} ${perFlowers(b)}. Wie viele Blumen sind es zusammen?`;
 export const rowsLabel = (a: number, b: number) =>
-  `Рядов: ${a}. В каждом по ${b}.`;
+  `Reihen: ${a}. In jeder Reihe: ${b}.`;
 export const removedRowsLabel = (a: number, b: number, n: number) =>
-  `${rowsLabel(a, b)} Убираем рядов: ${n}. Остаётся: ${a - n}.`;
+  `${rowsLabel(a, b)} Wir nehmen ${n} Reihen weg. Übrig bleiben ${a - n}.`;
 export const greeting = (name: string) =>
-  name ? `${name}, здесь твой уют` : "Здесь твой уют";
+  name
+    ? `${name}, hier ist dein gemütlicher Ort`
+    : "Hier ist dein gemütlicher Ort";

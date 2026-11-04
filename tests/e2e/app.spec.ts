@@ -104,7 +104,7 @@ async function finishActivity(page: Page) {
 }
 async function parents(page: Page) {
   await page
-    .getByRole("navigation", { name: "Главное меню" })
+    .getByRole("navigation", { name: "Hauptmenü" })
     .filter({ visible: true })
     .getByRole("button", { name: S.parents, exact: true })
     .click();
@@ -124,6 +124,9 @@ test("subdirectory manifest, icons, worker and cache stay within the application
     .locator('link[rel="manifest"]')
     .evaluate((e: HTMLLinkElement) => e.href);
   const manifest = await (await page.request.get(manifestURL)).json();
+  await expect(page.locator("html")).toHaveAttribute("lang", "de");
+  expect(manifest.lang).toBe("de");
+  expect(manifest.name).toBe("Gemütliche Mathe");
   for (const field of ["id", "start_url", "scope"])
     expect(new URL(manifest[field], manifestURL).href).toBe(base.href);
   for (const icon of manifest.icons) {
@@ -150,11 +153,14 @@ test("vertical 7 × 8: explanation, delayed independent retrieval, persistence a
 }) => {
   await onboard(page);
   await page
-    .getByRole("navigation", { name: "Главное меню" })
+    .getByRole("navigation", { name: "Hauptmenü" })
     .filter({ visible: true })
     .getByRole("button", { name: S.lessons, exact: true })
     .click();
-  for (const title of ["Из групп — в умножение", "Пять — половина десяти"]) {
+  for (const title of [
+    "Von Gruppen zum Malnehmen",
+    "Fünf ist die Hälfte von zehn",
+  ]) {
     await page
       .locator(".lesson-tile")
       .filter({ has: page.getByRole("heading", { name: title, exact: true }) })
@@ -165,17 +171,17 @@ test("vertical 7 × 8: explanation, delayed independent retrieval, persistence a
     .locator(".lesson-tile")
     .filter({
       has: page.getByRole("heading", {
-        name: "Семь: пять плюс два",
+        name: "Sieben: fünf plus zwei",
         exact: true,
       }),
     })
     .getByRole("button", { name: S.lessonStart })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Семь: пять плюс два" }),
+    page.getByRole("heading", { name: "Sieben: fünf plus zwei" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Рядов: 7. В каждом по 8.", { exact: true }),
+    page.getByText("Reihen: 7. In jeder Reihe: 8.", { exact: true }),
   ).toBeVisible();
   await expect(page.getByText("40 + 16 = 56", { exact: true })).toHaveCount(0);
   await page.screenshot({ path: "artifacts/lesson-7x8.png", fullPage: true });
@@ -285,7 +291,7 @@ test("complete precache enables offline reload and a whole lesson; missing entry
     page.getByRole("button", { name: S.startMission, exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("navigation", { name: "Главное меню" })
+    .getByRole("navigation", { name: "Hauptmenü" })
     .filter({ visible: true })
     .getByRole("button", { name: S.lessons, exact: true })
     .click();
@@ -304,7 +310,7 @@ test("complete precache enables offline reload and a whole lesson; missing entry
         if (request.url.includes("icon-512.png")) await cache.delete(request);
     }
   });
-  await page.getByRole("button", { name: /На телефон/ }).click();
+  await page.getByRole("button", { name: /Aufs Handy/ }).click();
   await page.getByRole("button", { name: S.online, exact: true }).click();
   await expect(page.getByText(S.offlinePending, { exact: true })).toBeVisible();
 });
@@ -332,7 +338,7 @@ test("responsive layouts, 200% text and no horizontal overflow", async ({
   }
   await page.setViewportSize({ width: 320, height: 740 });
   await page
-    .getByRole("navigation", { name: "Главное меню" })
+    .getByRole("navigation", { name: "Hauptmenü" })
     .filter({ visible: true })
     .getByRole("button", { name: S.map, exact: true })
     .click();
@@ -436,7 +442,7 @@ test("chosen Sanrio companion and local rounded font survive refresh and offline
   context,
 }) => {
   await page.goto("./");
-  await page.getByRole("button", { name: "Май Мелоди", exact: true }).click();
+  await page.getByRole("button", { name: "My Melody", exact: true }).click();
   await page.screenshot({
     path: "artifacts/character-choice.png",
     fullPage: true,
@@ -449,12 +455,12 @@ test("chosen Sanrio companion and local rounded font survive refresh and offline
   await page.evaluate(() => document.fonts.ready);
   expect(
     await page.evaluate(() =>
-      document.fonts.check('18px "Nunito Variable"', "Игрок 7 × 8"),
+      document.fonts.check('18px "Nunito Variable"', "Spieler 7 × 8"),
     ),
   ).toBe(true);
   await expect(page.locator(".room-mascot img")).toHaveAttribute(
     "alt",
-    "Май Мелоди",
+    "My Melody",
   );
   expect(
     await page
@@ -465,21 +471,21 @@ test("chosen Sanrio companion and local rounded font survive refresh and offline
   await page.reload();
   await expect(page.locator(".room-mascot img")).toHaveAttribute(
     "alt",
-    "Май Мелоди",
+    "My Melody",
   );
   await page.evaluate(() => document.fonts.ready);
   expect(
     await page.evaluate(() =>
-      document.fonts.check('18px "Nunito Variable"', "Игрок"),
+      document.fonts.check('18px "Nunito Variable"', "Spieler"),
     ),
   ).toBe(true);
   await page.getByRole("button", { name: S.settings, exact: true }).click();
-  await page.getByRole("button", { name: "Помпомпурин", exact: true }).click();
+  await page.getByRole("button", { name: "Pompompurin", exact: true }).click();
   await page.getByRole("button", { name: S.save, exact: true }).click();
   await page.reload();
   await expect(page.locator(".room-mascot img")).toHaveAttribute(
     "alt",
-    "Помпомпурин",
+    "Pompompurin",
   );
   expect(
     await page
@@ -522,29 +528,25 @@ test("quick round: recall first, optional help persists offline, gift appears in
   ).toBe(false);
   await answerTask(page, true);
   await finishActivity(page);
-  await expect(page.getByRole("heading", { name: "Готово! ✿" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Fertig! ✿" })).toBeVisible();
   expect((await readState(page)).milestones).toContain("cafe-1");
   const gift = page.getByRole("region", { name: S.chooseGift });
-  await gift
-    .getByRole("button", { name: "Подушка-сердце", exact: true })
-    .click();
+  await gift.getByRole("button", { name: "Herzkissen", exact: true }).click();
   await expect(
-    gift.locator('.room-item[aria-label="Подушка-сердце"]'),
+    gift.locator('.room-item[aria-label="Herzkissen"]'),
   ).toBeVisible();
   await page.screenshot({ path: "artifacts/quick-gift.png", fullPage: true });
   await page
-    .getByRole("button", { name: "В мою комнату", exact: true })
+    .getByRole("button", { name: "In mein Zimmer", exact: true })
     .click();
   await page.reload();
   await expect(
-    page.locator('.room-item[aria-label="Подушка-сердце"]'),
+    page.locator('.room-item[aria-label="Herzkissen"]'),
   ).toBeVisible();
-  await page.getByRole("button", { name: /Обустройство/ }).click();
-  const editor = page.getByRole("region", { name: "Обустройство комнаты" });
-  await editor
-    .getByRole("button", { name: "Подушка-сердце", exact: true })
-    .click();
-  await editor.getByRole("button", { name: /У окна/ }).click();
+  await page.getByRole("button", { name: /Dekoration/ }).click();
+  const editor = page.getByRole("region", { name: "Zimmer gestalten" });
+  await editor.getByRole("button", { name: "Herzkissen", exact: true }).click();
+  await editor.getByRole("button", { name: /Am Fenster/ }).click();
   await page.reload();
   expect((await readState(page)).room!.slots[1]).toBe(0);
   await page.setViewportSize({ width: 320, height: 740 });
@@ -564,7 +566,7 @@ test("illustrated story counts exact groups and stays supported after offline re
   await expect(page.locator(".counted-flower")).toHaveCount(6);
   await expect(
     page.getByText(
-      "На подоконнике 2 одинаковых горшочка. В каждом по 3 цветка. Сколько цветков всего?",
+      "Auf der Fensterbank stehen 2 gleiche Blumentöpfe. In jedem wachsen 3 Blumen. Wie viele Blumen sind es zusammen?",
       { exact: true },
     ),
   ).toBeVisible();
@@ -588,10 +590,10 @@ test("optional study, distinct character themes and both motion preferences", as
   page,
 }) => {
   await page.goto("./");
-  await page.getByRole("button", { name: "Май Мелоди", exact: true }).click();
+  await page.getByRole("button", { name: "My Melody", exact: true }).click();
   await page.getByRole("button", { name: S.start, exact: true }).click();
   await page
-    .getByRole("button", { name: "Хочу поучиться", exact: true })
+    .getByRole("button", { name: "Ich möchte lernen", exact: true })
     .click();
   await page
     .getByRole("button", { name: S.lessonStart, exact: true })
@@ -619,11 +621,11 @@ test("optional study, distinct character themes and both motion preferences", as
   ).toBe("none");
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.getByRole("button", { name: S.settings, exact: true }).click();
-  await page.getByRole("button", { name: "Помпомпурин", exact: true }).click();
+  await page.getByRole("button", { name: "Pompompurin", exact: true }).click();
   await page.getByLabel(S.motion, { exact: true }).uncheck();
   await page.getByRole("button", { name: S.save, exact: true }).click();
   await page
-    .getByRole("navigation", { name: "Главное меню" })
+    .getByRole("navigation", { name: "Hauptmenü" })
     .filter({ visible: true })
     .getByRole("button", { name: S.home, exact: true })
     .click();
@@ -645,19 +647,17 @@ test("theme selection previews both modes before saving and keeps the profile", 
   page,
 }) => {
   await page.goto("./");
-  await expect(
-    page.getByLabel("Как тебя зовут?", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByLabel("Wie heißt du?", { exact: true })).toBeVisible();
   await page.locator("main h1").focus();
   await expect(page.locator("main h1")).toBeFocused();
   await expect(page.locator("main h1")).toHaveCSS("outline-style", "none");
-  await page.getByLabel("Как тебя зовут?", { exact: true }).fill("Игрок");
+  await page.getByLabel("Wie heißt du?", { exact: true }).fill("Spieler");
   await expect(page.locator(".welcome-art .room-art")).toBeVisible();
   await page.getByRole("button", { name: S.calm, exact: true }).click();
   await expect(page.locator(".welcome-art .calm-preview")).toBeVisible();
   await expect(page.locator(".welcome-art .room-art")).toHaveCount(0);
   await expect(page.locator(".theme-description")).toContainText(
-    "без комнаты и сюжета кафе",
+    "ohne Zimmer und Café-Geschichte",
   );
   await page.screenshot({ path: "artifacts/calm-choice.png", fullPage: true });
   await page.getByRole("button", { name: S.cozy, exact: true }).click();
@@ -682,7 +682,7 @@ test("theme selection previews both modes before saving and keeps the profile", 
   await expect(page.locator(".calm-room")).toBeVisible();
   await expect(
     page.locator('meta[name="apple-mobile-web-app-title"]'),
-  ).toHaveAttribute("content", "Умножение");
+  ).toHaveAttribute("content", "Gemütliche Mathe");
   const icon = await page
     .locator('link[rel="apple-touch-icon"]')
     .getAttribute("href");

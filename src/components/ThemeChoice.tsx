@@ -10,12 +10,12 @@ export function ThemePreview({ theme, pet }: Pick<Profile, "theme" | "pet">) {
       ) : (
         <div className="calm-room calm-preview">
           <Icon name="leaf" size={42} />
-          <span>Спокойный тренажёр</span>
+          <span>Ruhig üben</span>
           <strong>2 × 3 = ?</strong>
           <p>
-            Понятные примеры и подсказки.
+            Klare Aufgaben und hilfreiche Tipps.
             <br />
-            Без комнаты и сюжета кафе.
+            Ohne Zimmer und Café-Geschichte.
           </p>
         </div>
       )}
@@ -47,11 +47,12 @@ export function ThemeChoice({
       </div>
       <p className="theme-description" aria-live="polite">
         {value === "cozy"
-          ? "Любимый персонаж, короткие раунды и подарки для комнаты."
-          : "Короткие раунды и подсказки без комнаты и сюжета кафе."}
+          ? "Lieblingsfigur, kurze Runden und Geschenke fürs Zimmer."
+          : "Kurze Runden und Tipps ohne Zimmer und Café-Geschichte."}
       </p>
       <small>
-        Можно переключать в любой момент. Имя, знания и подарки сохранятся.
+        Du kannst jederzeit wechseln. Name, Lernstand und Geschenke bleiben
+        erhalten.
       </small>
     </fieldset>
   );

@@ -116,13 +116,13 @@ export function Parents() {
             ]
               .slice(-8)
               .join(" · ")}{" "}
-            — самостоятельные верные ответы
+            — richtige Antworten ohne Hilfe
           </p>
         ) : (
           <p>{S.noStats}</p>
         )}
         <p>
-          {S.latency}: {avg === null ? "—" : `${avg} с`} (
+          {S.latency}: {avg === null ? "—" : `${avg} s`} (
           {stats.independent.length} {S.attempts})
         </p>
         <small>{S.latencyNote}</small>
@@ -190,7 +190,7 @@ export function Parents() {
               target="_blank"
               rel="noreferrer"
             >
-              IES / WWC: обучение математике, 2021
+              IES / WWC: Mathematik lernen, 2021
             </a>
           </li>
           <li>
@@ -199,7 +199,7 @@ export function Parents() {
               target="_blank"
               rel="noreferrer"
             >
-              IES / WWC: организация обучения и практика, 2007
+              IES / WWC: Unterricht gestalten und üben, 2007
             </a>
           </li>
           <li>
@@ -208,7 +208,7 @@ export function Parents() {
               target="_blank"
               rel="noreferrer"
             >
-              EEF: модели и представления
+              EEF: Modelle und Darstellungen
             </a>
           </li>
         </ul>
@@ -259,7 +259,7 @@ function AssessmentResult({ session }: { session: Session }) {
         <p>
           {intermediate?.completedAt && session.completedAt && (
             <>
-              Прошло календарных дней:{" "}
+              Vergangene Kalendertage:{" "}
               {Math.round(
                 (Date.parse(
                   localDate(
@@ -281,10 +281,11 @@ function AssessmentResult({ session }: { session: Session }) {
           {S.retention}: {retained.length}/{common.length}{" "}
           {common.length
             ? `(${Math.round((retained.length / common.length) * 100)}%)`
-            : "— нет сопоставимых верных фактов"}
+            : "— keine vergleichbaren richtigen Aufgaben"}
           <br />
           <small>
-            Из выражений, верных на промежуточной и повторно проверенных сейчас.
+            Von den Aufgaben, die bei der Zwischenprüfung richtig waren und
+            jetzt erneut geprüft wurden.
           </small>
         </p>
       )}

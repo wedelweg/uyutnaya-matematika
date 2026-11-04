@@ -8,15 +8,12 @@ export function plural(n: number, one: string, few: string, many: string) {
         ? few
         : many;
 }
-export const flowers = (n: number) =>
-  `${n} ${plural(n, "цветок", "цветка", "цветков")}`;
-export const cookies = (n: number) =>
-  `${n} ${plural(n, "печенье", "печенья", "печений")}`;
-export const plates = (n: number) =>
-  `${n} ${plural(n, "тарелка", "тарелки", "тарелок")}`;
+export const flowers = (n: number) => `${n} ${n === 1 ? "Blume" : "Blumen"}`;
+export const cookies = (n: number) => `${n} ${n === 1 ? "Keks" : "Kekse"}`;
+export const plates = (n: number) => `${n} Teller`;
 export const pots = (n: number) =>
-  `${n} ${plural(n, "одинаковый горшочек", "одинаковых горшочка", "одинаковых горшочков")}`;
+  n === 1 ? "ein Blumentopf" : `${n} gleiche Blumentöpfe`;
 export const perFlowers = (n: number) =>
-  `по ${n === 1 ? "одному цветку" : flowers(n)}`;
+  `${n === 1 ? "eine Blume" : flowers(n)}`;
 export const perCookies = (n: number) =>
-  `по ${n === 1 ? "одному печенью" : cookies(n)}`;
+  `je ${n === 1 ? "ein Keks" : cookies(n)}`;

@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/wedelweg/uyutnaya-matematika/actions/workflows/ci.yml/badge.svg)](https://github.com/wedelweg/uyutnaya-matematika/actions/workflows/ci.yml)
 
-A Russian-language multiplication practice PWA with short rounds, optional explanations and a room to decorate.
+A German-language multiplication practice PWA with short rounds, optional explanations and a room to decorate.
 
 **[Live demo](https://wedelweg.github.io/uyutnaya-matematika/)**
 
@@ -43,7 +43,7 @@ npm run test:e2e
 ## How it works
 
 React, TypeScript (strict mode), Vite, IndexedDB via `idb`, Workbox and vite-plugin-pwa.
-Vitest covers learning logic, planning, rewards, storage and Russian plural forms.
+Vitest covers learning logic, planning, rewards, storage and German word problems.
 Playwright exercises complete rounds, offline operation, persistence and responsive layouts.
 
 The service worker precaches build assets under `/uyutnaya-matematika/`.
@@ -81,7 +81,7 @@ for the retained Sanrio images and their unverified redistribution permission.
 «Уютная математика» — тренажёр таблицы умножения: короткие раунды,
 подсказки по запросу, уроки и украшение комнаты за занятия.
 
-Запуск: `npm ci && npm run dev`. Интерфейс на русском языке.
+Запуск: `npm ci && npm run dev`. Публичное демо по умолчанию на немецком языке.
 Прогресс хранится только на устройстве. После первой загрузки и подтверждения
 готовности приложение работает без интернета. Для переноса прогресса используйте
 экспорт и импорт JSON. Демо размещено бесплатно на GitHub Pages.

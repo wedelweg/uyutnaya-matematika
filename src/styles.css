@@ -223,6 +223,10 @@ input[type="checkbox"] {
 }
 .page-heading h1 {
   margin: 8px 0 10px;
+  overflow-wrap: anywhere;
+}
+.page-heading > div {
+  min-width: 0;
 }
 .eyebrow {
   font-size: 0.85rem;
